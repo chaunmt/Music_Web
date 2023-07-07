@@ -1,0 +1,16 @@
+:root {
+    /* Global */
+    --bg-color: #12111b;    
+    --w-color: #a58d6d;
+
+    /* Button */
+    --button-color: #ffffff;
+    --button-color-dim:#cecece;
+    --button-container-color: #34314f;
+
+    /* Audio Slider */
+    --track-color: #242036;
+    --thumb-color: #34314f59;
+    --progress-color: #ffffff;
+    --drag-progress-color:#72e5ff;
+}

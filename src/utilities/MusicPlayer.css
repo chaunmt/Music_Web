@@ -1,0 +1,158 @@
+@import url("../main.css");
+
+.container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 90px;
+    background-color: var(--button-container-color);
+    padding: 0;
+}
+.container button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+}
+.container button:active{
+    color: var(--button-color);
+}
+.stop-button {
+    position: fixed;
+    left: 60%;
+    align-items: center;
+    bottom: 35px;
+    font-size: 15px;
+    color: var(--button-color-dim);
+}
+.play-pause-button {
+    position: fixed;
+    left: 50%;      /* Left and transform make it stays in center*/
+    transform: translateX(-50%);
+    align-items: center;
+    bottom: 30px;
+    font-size: 40px;
+    color: var(--button-color);
+}
+.play-pause-button:active{
+    font-size: 38px;
+    bottom: 32px;
+}
+.next-button{
+}
+.time-slider[type="range"] {
+    /* Delete default styles */
+    -webkit-appearance: none;
+    appearance: none;
+
+    /* Configuration */
+    position: fixed;
+    bottom: 25px;
+    width: 30%;
+    height: 4px;
+    left: 50%;      /* Left and transform make it stays in center*/
+    transform: translateX(-50%);
+    outline: none;
+    border-radius: 2px;
+
+    /* Adjust progress bar's color by gradients */
+    background: linear-gradient(
+        to right,
+        var(--progress-color) 0%,
+        var(--progress-color) calc(var(--progress) * 100%),
+        var(--track-color) calc(var(--progress) * 100%),
+        var(--track-color) 100%
+    );
+} 
+.time-slider[type="range"]::-webkit-slider-thumb {
+    /* Delete default styles */
+    -webkit-appearance: none;
+
+    /* Configuration */
+    width: 4px;
+    height: 4px;
+    background: var(--progress-color);
+    border-radius: 50%;
+    margin-left: -1px;
+    cursor: pointer;
+}
+.time-slider[type="range"]:hover::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    margin-left: 1px;
+}
+.time-slider[type="range"]:active::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    margin-left: 1px;
+}
+.time-slider[type="range"]:hover {
+    background: linear-gradient(
+      to right,
+      var(--drag-progress-color) 0%,
+      var(--drag-progress-color) calc(var(--progress) * 100%),
+      var(--track-color) calc(var(--progress) * 100%),
+      var(--track-color) 100%
+    );
+}
+.volume-container {
+    position: fixed;
+    bottom: 3%;
+    right: 3%;
+    display: flex;
+}
+.volume-button {
+    position: relative;
+    bottom: 5px;
+    right: 4px;
+    font-size: 20px;
+    color: var(--button-color-dim);
+}
+.volume-slider[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 4px;
+    outline: none;
+    border-radius: 2px;
+
+    /* Adjust progress bar's color by gradients */
+    background: linear-gradient(
+        to right,
+        var(--progress-color) 0%,
+        var(--progress-color) calc(var(--volume) * 100%),
+        var(--track-color) calc(var(--volume) * 100%),
+        var(--track-color) 100%
+    );
+}
+.volume-slider[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 4px;
+    height: 4px;
+    background: var(--progress-color);
+    border-radius: 50%;
+    margin-left: -1px;
+    cursor: pointer;
+}
+.volume-slider[type="range"]:hover::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    margin-left: 1px;
+}
+.volume-slider[type="range"]:active::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    margin-left: 1px;
+}
+.volume-slider[type="range"]:hover {
+    background: linear-gradient(
+      to right,
+      var(--drag-progress-color) 0%,
+      var(--drag-progress-color) calc(var(--volume) * 100%),
+      var(--track-color) calc(var(--volume) * 100%),
+      var(--track-color) 100%
+    );
+}

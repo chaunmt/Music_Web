@@ -7,10 +7,10 @@ import { ImVolumeHigh, ImVolumeMedium, ImVolumeLow,
 
 import "./MusicPlayer.css"
 
-export const MusicPlayer: React.FC = () => {
+export const MusicPlayer = () => {
 	const [playing, setPlaying] = React.useState(false);    // Play and Pause
 	const [progress, setProgress] = React.useState(0);      // Progress Slider
-  const [volume, setVolume] = React.useState(1);        // Volume Control
+  const [volume, setVolume] = React.useState(1);        	// Volume Control
 	const playerRef = React.useRef<ReactPlayer>(null);
 
 	const handleStop = () => {
@@ -32,16 +32,16 @@ export const MusicPlayer: React.FC = () => {
 	
 	const handleProgress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProgress(parseFloat(e.target.value));
-		if (playerRef.current) {
-			playerRef.current.seekTo(parseFloat(e.target.value));
-		}
+		// if (playerRef.current) {
+		// 	playerRef.current.seekTo(parseFloat(e.target.value));
+		// }
   }
 	
   return (
 		<div className="container">
-			<button className="stop-button" onClick={handleStop}>
+			{/* <button className="stop-button" onClick={handleStop}>
 				<p>kill dj ape</p>
-			</button>
+			</button> */}
 
 			<button className="play-pause-button" onClick={handlePlayPause}> 
 				{ playing ? <HiPause /> : <HiPlay /> }

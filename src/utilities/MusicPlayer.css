@@ -41,8 +41,6 @@
     font-size: 38px;
     bottom: 32px;
 }
-.next-button{
-}
 .time-slider[type="range"] {
     /* Delete default styles */
     -webkit-appearance: none;

@@ -1,12 +1,12 @@
-import React from "react"
-
 import { MusicPlayer } from "../routes"
+import { SearchBar } from "../utilities/SearchBar"
 import "./Home.css"
 
-export const Home: React.FC = () => { // Export Home as the declared function
+export const Home = () => { // Export Home as the declared function
   return (
     <div>
 			<MusicPlayer />
+      <SearchBar />
     </div>
   )
 }

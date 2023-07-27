@@ -1,5 +1,5 @@
 import React from "react";
-import { getTrackDetails } from "./YoutubeUtils";
+import YoutubeUtils from "./YoutubeUtils";
 
 
 export const SearchBar = () => {
@@ -11,10 +11,14 @@ export const SearchBar = () => {
     console.log(e.target.value);
   };
 
-  const handleSubmit = () => {
-    const details = getTrackDetails(searchInput);
+  const handleSubmit = async () => { 
+    // await basically unwrap the promise
+    // but it needs to be in async function
+    const { title, channel, url } = await YoutubeUtils.getTrackDetails(searchInput);
     console.log(searchInput);
-    console.log(details);
+    console.log(title);
+    console.log(channel);
+    console.log(url);
   }
 
   return (

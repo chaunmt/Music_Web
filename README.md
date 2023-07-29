@@ -9,6 +9,6 @@ Implement:
 - Youtube API. Documents: https://developers.google.com/youtube/v3/docs
 
 Note:
-- Production Time Counter: ~ 4 days + 6.75 hours
+- Production Time Counter: ~ 5 days + 0 hours
 
-Current Progress: Display Search Results + Search Bar CSS (YoutubeUtils, SearchBar)
+Current Progress: getPlaylistDetail (YoutubeUtils, SearchBar)

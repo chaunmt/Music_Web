@@ -8,14 +8,14 @@ const YoutubeUtils = {
 }
 
 function getVideoId(value: string) {
-  const regExp = /(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]{11})/;
-  const match = value.match(regExp);
+  const regex = /(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]{11})/;
+  const match = value.match(regex);
   return match ? match[1] : null;
 }
 
 function getPlaylistId(value: string) {
-  const regExp = /youtube\.com\/playlist\?list=([^#\&\?]+)/;
-  const match = value.match(regExp);
+  const regex = /youtube\.com\/playlist\?list=([^#&?]+)/;
+  const match = value.match(regex);
   return match ? match[1] : null;
 }
 

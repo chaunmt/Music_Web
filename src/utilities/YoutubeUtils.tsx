@@ -3,8 +3,6 @@ import { YOUTUBE_API_KEY } from "../API_KEY";
 
 const YoutubeUtils = {
   getDetails,
-  getVideoDetails,
-  getPlaylistDetails,
 }
 
 function getVideoId(value: string) {
@@ -28,8 +26,7 @@ async function getVideoDetails(value: string) {
       key: YOUTUBE_API_KEY,
     },
   });
-  const video = data.items[0];
-  return video;
+  return data.items[0];
 }
 
 async function getPlaylistDetails(value: string) {
@@ -41,13 +38,25 @@ async function getPlaylistDetails(value: string) {
       key: YOUTUBE_API_KEY,
     },
   });
-  const video = data.items[0];
-  return video;
+  return data.items[0];
+}
+
+async function getSearchDetails(value: string) {
+  const { data } = await axios.get("https://www.googleapis.com/youtube/v3/search", {
+    params: {
+      part: "snippet, id",
+      q: value,
+      maxResults: 5,
+      key: YOUTUBE_API_KEY,
+    },
+  });
+  return data;
 }
 
 async function getDetails(value: string) {
   if (getVideoId(value) != null) return getVideoDetails(value);
   if (getPlaylistId(value) != null) return getPlaylistDetails(value);
+  return getSearchDetails(value);
 }
 
 export default YoutubeUtils;

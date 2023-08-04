@@ -1,0 +1,35 @@
+@import url("../main.css");
+
+.search-box {
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  width: 42%;
+  height: 65%;
+  background-color: var(--bg-sub-color);
+  padding: 0;
+}
+
+.search-result-container{
+  font-size: 50%;
+  color: var(--button-color);
+}
+
+.search-bar input{
+  position: relative;
+  width: 90%;
+  height: 10%;
+  padding: 0;
+  border: 0;
+  color: var(--black);
+}
+
+.search-bar input::placeholder {
+  color: var(--button-color-dim);
+}
+.search-bar button {
+  position: relative;
+  width: 10%;
+  padding: 0;
+  border: 0;
+}

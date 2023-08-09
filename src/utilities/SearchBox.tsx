@@ -1,6 +1,7 @@
 import React from "react";
 import "./SearchBox.css"
 import YoutubeUtils from "./YoutubeUtils";
+import TrackList from "./TrackList";
 import { HiSearch } from "react-icons/hi";
 
 export const SearchBox = () => {
@@ -12,10 +13,35 @@ export const SearchBox = () => {
     setSearchInput(e.target.value);
   };
 
+  // await basically unwrap the promise
+  // but it needs to be in async function
   const handleSubmit = async () => { 
-    // await basically unwrap the promise
-    // but it needs to be in async function
     setSearchResult(await YoutubeUtils.getDetails(searchInput));
+  }
+
+  const handleDisplayResult = (results: string[] | null) => {
+    if (!results) return null;
+    return results.items.map((item, index) => {
+      let link = "";
+      if (item.id == "youtube#searchResult") {
+        link = "https://www.youtube.com/watch?v=" + item.id.videoId;
+      }
+      if (item.id == "youtube#video") {
+        link = "https://www.youtube.com/watch?v=" + item.id;
+      }
+      if (item.id == "youtube#playlist") {
+        link = "https://www.youtube.com/playlist?list=" + item.id;
+      }
+      return (
+        <div key={index}>
+          <img src={item.snippet.thumbnails.default.url} />
+          <h2> <a href={link}> {item.snippet.title} </a> </h2>
+          <h3> {item.snippet.channelTitle} </h3>
+          {/* handleAddTrack */}
+          <button onClick={TrackList.addTrack(link)}> add </button>
+        </div>
+      );
+    });
   }
 
   React.useEffect(() => {
@@ -39,7 +65,8 @@ export const SearchBox = () => {
         <h1> No result found </h1>
       ) : (
         <div className="search-result-container">
-        <h1> Result: </h1>
+          <h1> Result: </h1>
+          {handleDisplayResult(searchResult)}
         </div>
       ))}
     </div>  

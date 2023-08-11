@@ -7,12 +7,14 @@
   width: 42%;
   height: 65%;
   background-color: var(--bg-sub-color);
-  padding: 0;
 }
 
-.search-result-container{
+.search-result{
   font-size: 50%;
   color: var(--button-color);
+  margin: 2%;
+  max-height: 90%; /* Adjust the height as needed */
+  overflow: auto;
 }
 
 .search-bar input{

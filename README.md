@@ -9,6 +9,6 @@ Implement:
 - Youtube API. Documents: https://developers.google.com/youtube/v3/docs
 
 Note:
-- Production Time Counter: ~ 5 days + 5 hours
+- Production Time Counter: ~ 5 days + 5.2 hours
 
-Current Progress: SearchBox container and TrackList.addTrack
+Current Progress: Tracklist

@@ -64,7 +64,7 @@ export const SearchBox = () => {
       { searchResult == null ? (null) : (searchResult == 0 ? (
         <h1> No result found </h1>
       ) : (
-        <div className="search-result-container">
+        <div className="search-result">
           <h1> Result: </h1>
           {handleDisplayResult(searchResult)}
         </div>

@@ -9,6 +9,6 @@ Implement:
 - Youtube API. Documents: https://developers.google.com/youtube/v3/docs
 
 Note:
-- Production Time Counter: ~ 6 days + 2 hours
+- Production Time Counter: ~ 6 days + 2.75 hours
 
-Current Progress: Merge MusicService and MusicPlayer
+Current Progress: React Player

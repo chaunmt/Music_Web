@@ -8,7 +8,6 @@
   height: 65%;
   background-color: var(--bg-sub-color);
 }
-
 .search-result{
   font-size: 50%;
   color: var(--button-color);
@@ -16,7 +15,6 @@
   max-height: 90%; /* Adjust the height as needed */
   overflow: auto;
 }
-
 .search-bar input{
   position: relative;
   width: 90%;
@@ -25,7 +23,6 @@
   border: 0;
   color: var(--black);
 }
-
 .search-bar input::placeholder {
   color: var(--button-color-dim);
 }
@@ -82,8 +79,7 @@
 }
 .play-pause-button {
   position: relative;
-  left: 50%;      /* Left and transform make it stays in center*/
-  transform: translateX(-50%);
+  left: 50%;
   align-items: center;
   bottom: -16%;
   font-size: 280%;
@@ -93,7 +89,21 @@
   font-size: 300%;
   bottom: -16%;
 }
-.time-slider[type="range"] {
+.forward-button {
+  position: relative;
+  left: 50%;
+  align-items: center;
+  font-size: 150%;
+  color: var(--button-color);
+}
+.backward-button {
+  position: relative;
+  left: 40%;
+  align-items: center;
+  font-size: 150%;
+  color: var(--button-color);
+}
+.progress-slider[type="range"] {
   /* Delete default styles */
   -webkit-appearance: none;
   appearance: none;
@@ -117,7 +127,7 @@
       var(--track-color) 100%
   );
 } 
-.time-slider[type="range"]::-webkit-slider-thumb {
+.progress-slider[type="range"]::-webkit-slider-thumb {
   /* Delete default styles */
   -webkit-appearance: none;
 
@@ -128,15 +138,15 @@
   border-radius: 50%;
   cursor: pointer;
 }
-.time-slider[type="range"]:hover::-webkit-slider-thumb {
+.progress-slider[type="range"]:hover::-webkit-slider-thumb {
   width: 12px;
   height: 12px;
 }
-.time-slider[type="range"]:active::-webkit-slider-thumb {
+.progress-slider[type="range"]:active::-webkit-slider-thumb {
   width: 12px;
   height: 12px;
 }
-.time-slider[type="range"]:hover {
+.progress-slider[type="range"]:hover {
   background: linear-gradient(
     to right,
     var(--drag-progress-color) 0%,
@@ -155,6 +165,7 @@
 .volume-button {
   position: relative;
   top: 50%;
+  right: 1%;
   transform: translateY(-50%);
   font-size: 125%;
   color: var(--button-color-dim);
@@ -202,4 +213,10 @@
     var(--track-color) calc(var(--volume) * 100%),
     var(--track-color) 100%
   );
+}
+
+.hidden-box {
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }

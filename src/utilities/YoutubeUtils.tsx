@@ -46,7 +46,7 @@ async function getSearchDetails(value: string) {
     params: {
       part: "snippet, id",
       q: value,
-      maxResults: 5,
+      maxResults: 10,
       key: YOUTUBE_API_KEY,
     },
   });
@@ -54,8 +54,8 @@ async function getSearchDetails(value: string) {
 }
 
 async function getDetails(value: string) {
-  if (getVideoId(value) != null) return getVideoDetails(value);
-  if (getPlaylistId(value) != null) return getPlaylistDetails(value);
+  if (getVideoId(value)) return getVideoDetails(value);
+  if (getPlaylistId(value)) return getPlaylistDetails(value);
   return getSearchDetails(value);
 }
 

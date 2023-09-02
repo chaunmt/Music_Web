@@ -9,6 +9,6 @@ Implement:
 - Youtube API. Documents: https://developers.google.com/youtube/v3/docs
 
 Note:
-- Production Time Counter: ~ 6 days + 2.75 hours
+- Production Time Counter: ~ 6 days + 6 hours
 
-Current Progress: React Player
+Current Progress: Display value from video and playlist other than search

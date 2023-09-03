@@ -3,12 +3,11 @@ import ReactPlayer from "react-player";
 
 import "./MusicService.css";
 import YoutubeUtils from "./YoutubeUtils";
+import { defaultImg } from "../routes";
 
-import { HiSearch } from "react-icons/hi";
-import { HiPause, HiPlay } from "react-icons/hi"
+import { HiSearch, HiPause, HiPlay, HiMusicNote } from "react-icons/hi";
 import { ImVolumeHigh, ImVolumeMedium, ImVolumeLow,
-         ImVolumeMute, ImVolumeMute2 } from "react-icons/im"
-import { ImForward3, ImBackward2 } from "react-icons/im";
+         ImVolumeMute, ImVolumeMute2, ImForward3, ImBackward2 } from "react-icons/im"
 
 export const MusicService = () => {
   const [searchInput, setSearchInput] = React.useState("");
@@ -25,11 +24,22 @@ export const MusicService = () => {
     if (item.kind == "youtube#video") {
       link = "https://www.youtube.com/watch?v=" + item.id;
     }
-    if (item.kind == "youtube#playlist") {
-      link = "https://www.youtube.com/playlist?list=" + item.id;
+    if (item.kind == "youtube#playlistItem") {
+      link = "https://www.youtube.com/watch?v=" + item.snippet.resourceId.videoId;
     }
     return link;
   }
+  const findThumbnailsLink = (track: any) => {
+    let imgLink = "";
+    if (track.snippet.thumbnails.high) imgLink = track.snippet.thumbnails.high.url;
+    else if (track.snippet.thumbnails.maxres) imgLink = track.snippet.thumbnails.maxres.url;
+    else if (track.snippet.thumbnails.medium) imgLink = track.snippet.thumbnails.medium.url;
+    else if (track.snippet.thumbnails.standard) imgLink = track.snippet.thumbnails.standard.url;
+    else if (track.snippet.thumbnails.default) imgLink = track.snippet.thumbnails.default.url;
+    else imgLink = defaultImg;
+    return imgLink;
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
@@ -37,33 +47,21 @@ export const MusicService = () => {
     setSearchResult(await YoutubeUtils.getDetails(searchInput));
   }
   const handleResultDisplay = (results: any | null) => {
-    if (results?.items?.map)
-      return results?.items?.map(  // YoutubeUtils return data.items[] ==> "...items..."
-        (track: any, index: number) => {
-          const url = findLink(track);
-          return (
-            <div key={index}>
-              <img src={track.snippet.thumbnails.default.url} />
-              { } {index + 1} {" . "}
-              <a href={url}> {track.snippet.title} </a>
-              {track.snippet.channelTitle}
-              <button onClick={() => addTrack(track)}> add </button>
-            </div>
-          );
-        }
-      )
-    else if (results) {
-      const url = findLink(results);
-      return (
-        <div>
-          <img src={results.snippet.thumbnails.url} />
-          { } {1} {" . "}
-          <a href={url}> {results.snippet.title} </a>
-          {results.snippet.channelTitle}
-          <button onClick={() => addTrack(results)}> add </button>
-        </div>
-      );
-    }
+    return results?.items?.map(  // YoutubeUtils return data.items[] ==> "...items..."
+      (track: any, index: number) => {
+        if (!track || track.snippet.title == "Deleted video") return null;
+        const link = findLink(track);
+        return (
+          <div key={index} className="search-result-list-item">
+            <img src={findThumbnailsLink(track)} />
+            { } {index + 1} {" . "}
+            <a href={link}> {track.snippet.title} </a>
+            {track.snippet.channelTitle}
+            <button onClick={() => addTrack(track)}> add </button>
+          </div>
+        );
+      }
+    )
   }
   const addTrack = (track: any) => {
     if (trackList) setTrackList([...trackList, track]);
@@ -80,14 +78,15 @@ export const MusicService = () => {
   const handleTrackListDisplay = (tracks: any | null) => {
     return tracks?.map( // trackList is just a normal array
       (track: any, index: number) => {
-        const url = findLink(track);
+        if (!track || track.snippet.title == "Deleted video") return null;
+        const link = findLink(track);
         return (
-          <div key={index}>
-            <img src={track.snippet.thumbnails.default.url} />
+          <div key={index} className="track-list-item">
+            <img src={findThumbnailsLink(track)} />
+            {index == curTrack ? (< HiMusicNote />) : (null)}
             { } {index + 1} {" . "}
-            <a href={url}> {track.snippet.title} </a>
+            <a href={link}> {track.snippet.title} </a>
             {track.snippet.channelTitle}
-            {index == curTrack ? (<p>is playing</p>) : (null)}
             <button onClick={() => removeTrack(index)}> remove </button>
           </div>
         );
@@ -138,8 +137,10 @@ export const MusicService = () => {
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(parseFloat(e.target.value));
   };
+  console.log(searchResult);
+  console.log(trackList);
   return (
-    <div>
+    <div className="global">
       <div className="search-box">
 
         <input
@@ -156,7 +157,7 @@ export const MusicService = () => {
           <HiSearch />
         </button>
 
-        <div className="search-result">
+        <div className="search-result-list">
           {handleResultDisplay(searchResult)}
         </div>
 

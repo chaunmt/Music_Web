@@ -2,7 +2,7 @@ import axios from "axios";
 import { YOUTUBE_API_KEY } from "../API_KEY";
 
 const YoutubeUtils = {
-  getDetails,
+  getDetails
 }
 
 function getVideoId(value: string) {
@@ -26,19 +26,19 @@ async function getVideoDetails(value: string) {
       key: YOUTUBE_API_KEY,
     },
   });
-  return data.items[0];
+  return data;
 }
 
 async function getPlaylistDetails(value: string) {
-  const { data } = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
+  const { data } = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
     params: {
-      part: "snippet, id, contentDetails",
-      id: getPlaylistId(value),
-      maxResults: 1,
+      part: "snippet, id",
+      playlistId: getPlaylistId(value),
+      maxResults: 50,
       key: YOUTUBE_API_KEY,
     },
   });
-  return data.items[0];
+  return data;
 }
 
 async function getSearchDetails(value: string) {

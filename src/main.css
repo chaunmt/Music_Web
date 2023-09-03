@@ -3,7 +3,7 @@
     --black: #000000;
     --white: #ffffff;
     --bg-color: #12111b;    
-    --w-color: #ffffff;
+    --w-color: #000000;
     --bg-sub-color: #242036;
 
     /* Button */
@@ -12,7 +12,7 @@
     --button-container-color: #34314f;
 
     /* Audio Slider */
-    --track-color: #242036;
+    --slider-color: #242036;
     --thumb-color: #34314f59;
     --progress-color: #ffffff;
     --drag-progress-color:#72e5ff;

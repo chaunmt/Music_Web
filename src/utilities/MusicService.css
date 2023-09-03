@@ -1,19 +1,27 @@
 @import url("../main.css");
+.global img {
+  width: 20%;
+  height: 20%;
+}
 
 .search-box {
   position: fixed;
+  font-size: 150%;
   top: 10%;
   left: 5%;
   width: 42%;
   height: 65%;
   background-color: var(--bg-sub-color);
 }
-.search-result{
+.search-result-list {
   font-size: 50%;
-  color: var(--button-color);
-  margin: 2%;
+  color: var(--w-color);
   max-height: 90%; /* Adjust the height as needed */
   overflow: auto;
+}
+.search-result-list-item {
+  background-color: var(--white);
+  margin: 2%;
 }
 .search-bar input{
   position: relative;
@@ -35,6 +43,7 @@
 
 .track-box {
   position: fixed;
+  font-size: 150%;
   top: 10%;
   right: 5%;
   width: 42%;
@@ -43,10 +52,15 @@
 }
 .track-list {
   font-size: 50%;
-  color: var(--button-color);
-  margin: 2%;
+  color: var(--w-color);
   max-height: 90%; /* Adjust the height as needed */
   overflow: auto;
+}
+.track-list-item {
+  background-color: var(--white);
+  margin: 2%;
+}
+.thumbnails {
 }
 
 
@@ -123,8 +137,8 @@
       to right,
       var(--progress-color) 0%,
       var(--progress-color) calc(var(--progress) * 100%),
-      var(--track-color) calc(var(--progress) * 100%),
-      var(--track-color) 100%
+      var(--slider-color) calc(var(--progress) * 100%),
+      var(--slider-color) 100%
   );
 } 
 .progress-slider[type="range"]::-webkit-slider-thumb {
@@ -151,8 +165,8 @@
     to right,
     var(--drag-progress-color) 0%,
     var(--drag-progress-color) calc(var(--progress) * 100%),
-    var(--track-color) calc(var(--progress) * 100%),
-    var(--track-color) 100%
+    var(--slider-color) calc(var(--progress) * 100%),
+    var(--slider-color) 100%
   );
 }
 .volume-container {
@@ -185,8 +199,8 @@
       to right,
       var(--progress-color) 0%,
       var(--progress-color) calc(var(--volume) * 100%),
-      var(--track-color) calc(var(--volume) * 100%),
-      var(--track-color) 100%
+      var(--slider-color) calc(var(--volume) * 100%),
+      var(--slider-color) 100%
   );
 }
 .volume-slider[type="range"]::-webkit-slider-thumb {
@@ -210,8 +224,8 @@
     to right,
     var(--drag-progress-color) 0%,
     var(--drag-progress-color) calc(var(--volume) * 100%),
-    var(--track-color) calc(var(--volume) * 100%),
-    var(--track-color) 100%
+    var(--slider-color) calc(var(--volume) * 100%),
+    var(--slider-color) 100%
   );
 }
 

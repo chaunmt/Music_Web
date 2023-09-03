@@ -9,6 +9,6 @@ Implement:
 - Youtube API. Documents: https://developers.google.com/youtube/v3/docs
 
 Note:
-- Production Time Counter: ~ 6 days + 6 hours
+- Production Time Counter: ~ 7 days + 1.5 hours
 
-Current Progress: Display value from video and playlist other than search
+Current Progress: Stop unavailable video from being displayed + Implement next page and prev page token

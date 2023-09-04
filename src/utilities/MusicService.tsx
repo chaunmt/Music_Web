@@ -49,6 +49,7 @@ export const MusicService = () => {
       (track: any, index: number) => {
         if (!track || track.snippet.title == "Deleted video") return null;
         const link = findLink(track);
+        if (link == "https://www.youtube.com/watch?v=undefined") return null;
         return (
           <div key={index} className="search-result-list-item">
             <img src={findThumbnailsLink(track)} />
@@ -82,7 +83,6 @@ export const MusicService = () => {
   const handleTrackListDisplay = (tracks: any | null) => {
     return tracks?.map( // trackList is just a normal array
       (track: any, index: number) => {
-        if (!track || track.snippet.title == "Deleted video") return null;
         const link = findLink(track);
         return (
           <div key={index} className="track-list-item">

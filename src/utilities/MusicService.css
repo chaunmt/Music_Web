@@ -3,6 +3,8 @@
   width: 20%;
   height: 20%;
 }
+.global nav {
+}
 
 .search-box {
   position: fixed;
@@ -39,6 +41,11 @@
   width: 10%;
   padding: 0;
   border: 0;
+}
+.search-page-navigator {
+  position: relative;
+  bottom: 0;
+  
 }
 
 .track-box {
@@ -94,7 +101,7 @@
 .play-pause-button {
   position: relative;
   left: 50%;
-  align-items: center;
+  transform: translateX(-50%);
   bottom: -16%;
   font-size: 280%;
   color: var(--button-color);
@@ -105,16 +112,12 @@
 }
 .forward-button {
   position: relative;
-  left: 50%;
-  align-items: center;
-  font-size: 150%;
+  font-size: 200%;
   color: var(--button-color);
 }
 .backward-button {
   position: relative;
-  left: 40%;
-  align-items: center;
-  font-size: 150%;
+  font-size: 200%;
   color: var(--button-color);
 }
 .progress-slider[type="range"] {

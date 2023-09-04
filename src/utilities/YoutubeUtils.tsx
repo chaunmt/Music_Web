@@ -29,34 +29,36 @@ async function getVideoDetails(value: string) {
   return data;
 }
 
-async function getPlaylistDetails(value: string) {
+async function getPlaylistDetails(value: string, pageToken: string) {
   const { data } = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
     params: {
       part: "snippet, id",
       playlistId: getPlaylistId(value),
       maxResults: 50,
+      pageToken: pageToken,
       key: YOUTUBE_API_KEY,
     },
   });
   return data;
 }
 
-async function getSearchDetails(value: string) {
+async function getSearchDetails(value: string, pageToken: string) {
   const { data } = await axios.get("https://www.googleapis.com/youtube/v3/search", {
     params: {
       part: "snippet, id",
       q: value,
       maxResults: 10,
+      pageToken: pageToken,
       key: YOUTUBE_API_KEY,
     },
   });
   return data;
 }
 
-async function getDetails(value: string) {
+async function getDetails(value: string, pageToken: string) {
   if (getVideoId(value)) return getVideoDetails(value);
-  if (getPlaylistId(value)) return getPlaylistDetails(value);
-  return getSearchDetails(value);
+  if (getPlaylistId(value)) return getPlaylistDetails(value, pageToken);
+  return getSearchDetails(value, pageToken);
 }
 
 export default YoutubeUtils;

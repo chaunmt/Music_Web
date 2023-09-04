@@ -34,7 +34,7 @@ async function getPlaylistDetails(value: string, pageToken: string) {
     params: {
       part: "snippet, id",
       playlistId: getPlaylistId(value),
-      maxResults: 50,
+      maxResults: 10,
       pageToken: pageToken,
       key: YOUTUBE_API_KEY,
     },

@@ -13,6 +13,7 @@ export const MusicService = () => {
   const [searchInput, setSearchInput] = React.useState("");
   const [searchResult, setSearchResult] = React.useState<any>([]);
   const [trackList, setTrackList] = React.useState<any>([]);
+  const [curSearchPage, setCurSearchPage] = React.useState(1);
 
   // Search Events
   const findLink = (item: any) => {
@@ -53,7 +54,6 @@ export const MusicService = () => {
         return (
           <div key={index} className="search-result-list-item">
             <img src={findThumbnailsLink(track)} />
-            { } {index + 1} {" . "}
             <a href={link}> {track.snippet.title} </a>
             {track.snippet.channelTitle}
             <button onClick={() => addTrack(track)}> add </button>
@@ -63,10 +63,14 @@ export const MusicService = () => {
     )
   }
   const handleNextSearchPage = async () => {
+    if (searchInput == "" || searchResult.nextPageToken == null) return null;
+    setCurSearchPage(curSearchPage + 1);
     setSearchResult(await YoutubeUtils.getDetails(searchInput, searchResult.nextPageToken));
   }
   const handlePrevSearchPage = async () => {
-    setSearchResult(await YoutubeUtils.getDetails(searchInput, searchResult.PrevPageToken));
+    if (searchInput == "" || searchResult.prevPageToken == null) return null;
+    setCurSearchPage(curSearchPage - 1);
+    setSearchResult(await YoutubeUtils.getDetails(searchInput, searchResult.prevPageToken));
   }
   const addTrack = (track: any) => {
     if (trackList) setTrackList([...trackList, track]);
@@ -167,7 +171,7 @@ export const MusicService = () => {
 
         <div className="search-page-navigator">
           <button onClick={handlePrevSearchPage}>prev</button>
-          { "current page" }          
+          { curSearchPage }          
           <button onClick={handleNextSearchPage}>next</button>
         </div>
 

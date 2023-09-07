@@ -19,8 +19,11 @@ export const MusicService = () => {
   const findLink = (item: any) => {
     if (!item) return "";
     let link = "";
-    if (item.kind == "youtube#searchResult") {
+    if (item.id.kind == "youtube#video") {
       link = "https://www.youtube.com/watch?v=" + item.id.videoId;
+    }
+    if (item.id.kind == "youtube#playlist") {
+      link = "https://www.youtube.com/playlist?list=" + item.id.playlistId;
     }
     if (item.kind == "youtube#video") {
       link = "https://www.youtube.com/watch?v=" + item.id;
@@ -145,8 +148,10 @@ export const MusicService = () => {
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(parseFloat(e.target.value));
   };
-  console.log(searchResult);
-  console.log(trackList);
+  
+  // console.log(searchResult);
+  // console.log(trackList);
+
   return (
     <div className="global">
       <div className="search-box">

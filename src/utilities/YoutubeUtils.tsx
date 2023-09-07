@@ -47,7 +47,8 @@ async function getSearchDetails(value: string, pageToken: string) {
     params: {
       part: "snippet, id",
       q: value,
-      maxResults: 10,
+      type: "any",
+      maxResults: 5,
       pageToken: pageToken,
       key: YOUTUBE_API_KEY,
     },

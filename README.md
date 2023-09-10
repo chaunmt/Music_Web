@@ -11,8 +11,7 @@ Implement:
 Note:
 - Production Time Counter: ~ 59 hours
 
-Current Progress: Make playlist become a member of trackList and its child contain in itself
-                  ==> Display playlist component as separate items (Hide/Unhide) component)
+Current Progress: Display playlist component as separate items (Hide/Unhide)
                   Add loop all
                   Add Shuffle Button
                   Add Duration

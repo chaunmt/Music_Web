@@ -15,6 +15,13 @@ export const MusicService = () => {
   const [trackList, setTrackList] = React.useState<any>([]);
   const [curSearchPage, setCurSearchPage] = React.useState(1);
 
+  const [playing, setPlaying] = React.useState(false);    // Play and Pause
+  const [progress, setProgress] = React.useState(0);      // Progress Slider
+  const [volume, setVolume] = React.useState(1);          // Volume Control
+  const [prevVolume, setPrevVolume] = React.useState(1); 
+  const [curTrack, setCurTrack] = React.useState(0);  	
+  const playerRef = React.useRef<ReactPlayer>(null);
+
   // Search Events
   const findLink = (item: any) => {
     if (!item) return "";
@@ -53,13 +60,38 @@ export const MusicService = () => {
       (track: any, index: number) => {
         if (!track || track.snippet.title == "Deleted video") return null;
         const link = findLink(track);
-        if (link == "https://www.youtube.com/watch?v=undefined") return null;
+        if (link == "https://www.youtube.com/watch?v=undefined" || link=="") 
+          return null;
         return (
           <div key={index} className="search-result-list-item">
             <img src={findThumbnailsLink(track)} />
             <a href={link}> {track.snippet.title} </a>
             {track.snippet.channelTitle}
-            <button onClick={() => addTrack(track)}> add </button>
+            <button onClick={() => addTrack(track, trackList.length + 1)}>
+              add
+            </button>
+            {track.id.kind=="youtube#playlist"?
+              (<button
+                onClick={async() => displayPlaylist(await YoutubeUtils.getDetails(link, ""))}>
+                show tracks</button>)
+              :
+              (null)
+            }
+          </div>
+        );
+      }
+    )
+  }
+  const displayPlaylist = (results: any | null) => {
+    return results?.items?.map(  
+      (track: any, index: number) => {
+        if (!track || track.snippet.title == "Deleted video") return null;
+        const link = findLink(track);
+        console.log(link);
+        if (link == "https://www.youtube.com/watch?v=undefined") return null;
+        return (
+          <div key={index}>
+            <p>aaaa</p>
           </div>
         );
       }
@@ -75,10 +107,19 @@ export const MusicService = () => {
     setCurSearchPage(curSearchPage - 1);
     setSearchResult(await YoutubeUtils.getDetails(searchInput, searchResult.prevPageToken));
   }
-  const addTrack = (track: any) => {
-    if (trackList) setTrackList([...trackList, track]);
+  const addTrack = (track: any, index: number) => {
+    if (index < 0 || index > trackList.length + 1) return null;
+    if (trackList.length == 0 || index > trackList.length) setTrackList([...trackList, track]);
+    else
+      setTrackList([
+        ...trackList.slice(0, index),
+        ...[track],
+        ...trackList.slice(index, trackList.length + 1)
+      ]);
+    if (index <= curTrack) setCurTrack(curTrack + 1);
   }
   const removeTrack = (index: any) => {
+    if (trackList.length == 0) return null;
     if (index < 0 || index > trackList.length) return null;
     setTrackList([
       ...trackList.slice(0, index),
@@ -99,18 +140,14 @@ export const MusicService = () => {
             <a href={link}> {track.snippet.title} </a>
             {track.snippet.channelTitle}
             <button onClick={() => removeTrack(index)}> remove </button>
+            <button onClick={() => addTrack(track, index + 1)}>
+              loop
+            </button>
           </div>
         );
       }
     )
   }
-
-  const [playing, setPlaying] = React.useState(false);    // Play and Pause
-  const [progress, setProgress] = React.useState(0);      // Progress Slider
-  const [volume, setVolume] = React.useState(1);          // Volume Control
-  const [prevVolume, setPrevVolume] = React.useState(1); 
-  const [curTrack, setCurTrack] = React.useState(0);  	
-  const playerRef = React.useRef<ReactPlayer>(null);
 
   const handleCancel = () => {
     setPlaying(false);

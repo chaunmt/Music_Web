@@ -2,8 +2,7 @@ import React from "react";
 import ReactPlayer from "react-player";
 
 import "./MusicService.css";
-import YoutubeUtils from "./YoutubeUtils";
-import { defaultImg } from "../routes";
+import YTUtils from "./YoutubeUtils";
 
 import { HiSearch, HiPause, HiPlay, HiMusicNote } from "react-icons/hi";
 import { ImVolumeHigh, ImVolumeMedium, ImVolumeLow,
@@ -22,49 +21,22 @@ export const MusicService = () => {
   const [curTrack, setCurTrack] = React.useState(0);  	
   const playerRef = React.useRef<ReactPlayer>(null);
 
-  // Search Events
-  const findLink = (item: any) => {
-    if (!item) return "";
-    let link = "";
-    if (item.id.kind == "youtube#video") {
-      link = "https://www.youtube.com/watch?v=" + item.id.videoId;
-    }
-    if (item.id.kind == "youtube#playlist") {
-      link = "https://www.youtube.com/playlist?list=" + item.id.playlistId;
-    }
-    if (item.kind == "youtube#video") {
-      link = "https://www.youtube.com/watch?v=" + item.id;
-    }
-    if (item.kind == "youtube#playlistItem") {
-      link = "https://www.youtube.com/watch?v=" + item.snippet.resourceId.videoId;
-    }
-    return link;
-  }
-  const findThumbnailsLink = (track: any) => {
-    if (track.snippet.thumbnails.high) return track.snippet.thumbnails.high.url;
-    else if (track.snippet.thumbnails.maxres) return track.snippet.thumbnails.maxres.url;
-    else if (track.snippet.thumbnails.medium) return track.snippet.thumbnails.medium.url;
-    else if (track.snippet.thumbnails.standard) return track.snippet.thumbnails.standard.url;
-    else if (track.snippet.thumbnails.default) return track.snippet.thumbnails.default.url;
-    else return defaultImg;
-  }
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
   const handleSearchSubmit = async () => { //async wraps up the return result
-    setSearchResult(await YoutubeUtils.getDetails(searchInput, ""));
+    setSearchResult(await YTUtils.getDetails(searchInput, ""));
   }
   const handleResultDisplay = (results: any | null) => {
     return results?.items?.map(  // YoutubeUtils return data.items[] ==> "...items..."
       (track: any, index: number) => {
         if (!track || track.snippet.title == "Deleted video") return null;
-        const link = findLink(track);
+        const link = YTUtils.getYTLink(track);
         if (link == "https://www.youtube.com/watch?v=undefined" || link=="") 
           return null;
         return (
           <div key={index} className="search-result-list-item">
-            <img src={findThumbnailsLink(track)} />
+            <img src={YTUtils.getIMGLink(track)} />
             <a href={link}> {track.snippet.title} </a>
             {track.snippet.channelTitle}
             <button onClick={() => addTrack(track, trackList.length + 1)}>
@@ -72,7 +44,7 @@ export const MusicService = () => {
             </button>
             {track.id.kind=="youtube#playlist"?
               (<button
-                onClick={async() => displayPlaylist(await YoutubeUtils.getDetails(link, ""))}>
+                onClick={async() => displayPlaylist(await YTUtils.getDetails(link, ""))}>
                 show tracks</button>)
               :
               (null)
@@ -86,7 +58,7 @@ export const MusicService = () => {
     return results?.items?.map(  
       (track: any, index: number) => {
         if (!track || track.snippet.title == "Deleted video") return null;
-        const link = findLink(track);
+        const link = YTUtils.getYTLink(track);
         console.log(link);
         if (link == "https://www.youtube.com/watch?v=undefined") return null;
         return (
@@ -100,12 +72,12 @@ export const MusicService = () => {
   const handleNextSearchPage = async () => {
     if (searchInput == "" || searchResult.nextPageToken == null) return null;
     setCurSearchPage(curSearchPage + 1);
-    setSearchResult(await YoutubeUtils.getDetails(searchInput, searchResult.nextPageToken));
+    setSearchResult(await YTUtils.getDetails(searchInput, searchResult.nextPageToken));
   }
   const handlePrevSearchPage = async () => {
     if (searchInput == "" || searchResult.prevPageToken == null) return null;
     setCurSearchPage(curSearchPage - 1);
-    setSearchResult(await YoutubeUtils.getDetails(searchInput, searchResult.prevPageToken));
+    setSearchResult(await YTUtils.getDetails(searchInput, searchResult.prevPageToken));
   }
   const addTrack = (track: any, index: number) => {
     if (index < 0 || index > trackList.length + 1) return null;
@@ -131,10 +103,10 @@ export const MusicService = () => {
   const handleTrackListDisplay = (tracks: any | null) => {
     return tracks?.map( // trackList is just a normal array
       (track: any, index: number) => {
-        const link = findLink(track);
+        const link = YTUtils.getYTLink(track);
         return (
           <div key={index} className="track-list-item">
-            <img src={findThumbnailsLink(track)} />
+            <img src={YTUtils.getIMGLink(track)} />
             {index == curTrack ? (< HiMusicNote />) : (null)}
             { } {index + 1} {" . "}
             <a href={link}> {track.snippet.title} </a>
@@ -277,7 +249,7 @@ export const MusicService = () => {
           }
           <ReactPlayer 
             ref={playerRef}
-            url={findLink(trackList[curTrack])}
+            url={YTUtils.getYTLink(trackList[curTrack])}
             volume={volume}
             playing={playing}
             onProgress={handleProgress}

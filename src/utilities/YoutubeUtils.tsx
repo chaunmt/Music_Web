@@ -1,8 +1,10 @@
 import axios from "axios";
-import { YOUTUBE_API_KEY } from "../API_KEY";
+import { YOUTUBE_API_KEY, defaultImg } from "../routes";
 
-const YoutubeUtils = {
-  getDetails
+const YTUtils = {
+  getDetails,
+  getYTLink,
+  getIMGLink,
 }
 
 function getVideoId(value: string) {
@@ -62,4 +64,31 @@ async function getDetails(value: string, pageToken: string) {
   return getSearchDetails(value, pageToken);
 }
 
-export default YoutubeUtils;
+function getYTLink (item: any) {
+  if (!item) return "";
+  let link = "";
+  if (item.id.kind == "youtube#video") {
+    link = "https://www.youtube.com/watch?v=" + item.id.videoId;
+  }
+  if (item.id.kind == "youtube#playlist") {
+    link = "https://www.youtube.com/playlist?list=" + item.id.playlistId;
+  }
+  if (item.kind == "youtube#video") {
+    link = "https://www.youtube.com/watch?v=" + item.id;
+  }
+  if (item.kind == "youtube#playlistItem") {
+    link = "https://www.youtube.com/watch?v=" + item.snippet.resourceId.videoId;
+  }
+  return link;
+}
+
+function getIMGLink (track: any) {
+  if (track.snippet.thumbnails.high) return track.snippet.thumbnails.high.url;
+  else if (track.snippet.thumbnails.maxres) return track.snippet.thumbnails.maxres.url;
+  else if (track.snippet.thumbnails.medium) return track.snippet.thumbnails.medium.url;
+  else if (track.snippet.thumbnails.standard) return track.snippet.thumbnails.standard.url;
+  else if (track.snippet.thumbnails.default) return track.snippet.thumbnails.default.url;
+  else return defaultImg;
+}
+
+export default YTUtils;

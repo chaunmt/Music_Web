@@ -12,6 +12,7 @@ Note:
 - Production Time Counter: ~ 59 hours
 
 Current Progress: Display playlist component as separate items (Hide/Unhide)
+                  Make loop a condition check instead of adding it to the queue --> Make unloop a thing
                   Add loop all
                   Add Shuffle Button
                   Add Duration

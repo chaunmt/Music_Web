@@ -1,5 +1,5 @@
 import axios from "axios";
-import { YOUTUBE_API_KEY, defaultImg } from "../routes";
+import { YOUTUBE_API_KEY, defaultImg } from "../resources";
 
 const YTUtils = {
   getDetails,

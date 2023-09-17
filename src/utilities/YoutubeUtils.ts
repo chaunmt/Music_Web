@@ -1,9 +1,9 @@
 import axios from "axios";
 import { YOUTUBE_API_KEY, defaultImg } from "../resources";
 
-const YTUtils = {
+const YT = {
   getDetails,
-  getYTLink,
+  getTrackLink,
   getIMGLink,
 }
 
@@ -64,7 +64,7 @@ async function getDetails(value: string, pageToken: string) {
   return getSearchDetails(value, pageToken);
 }
 
-function getYTLink (item: any) {
+function getTrackLink (item: any) {
   if (!item) return "";
   let link = "";
   if (item.id.kind == "youtube#video") {
@@ -79,6 +79,7 @@ function getYTLink (item: any) {
   if (item.kind == "youtube#playlistItem") {
     link = "https://www.youtube.com/watch?v=" + item.snippet.resourceId.videoId;
   }
+  if (link == "https://www.youtube.com/watch?v=undefined" || link=="") link = "";
   return link;
 }
 
@@ -91,4 +92,4 @@ function getIMGLink (track: any) {
   else return defaultImg;
 }
 
-export default YTUtils;
+export default YT;

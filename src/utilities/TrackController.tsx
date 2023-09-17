@@ -1,40 +1,40 @@
-import React from "react";
-import ReactPlayer from "react-player";
-
+import React        from "react";
+import ReactPlayer  from "react-player";
 import "./MusicService.css";
-import YTUtils from "./YoutubeUtils";
+
+import YT from "./YoutubeUtils";
+import err from "../errors";
 
 import { icons } from "../resources";
 
-export const MusicService = () => {
-  const [searchInput, setSearchInput] = React.useState("");
-  const [searchResult, setSearchResult] = React.useState<any>([]);
-  const [trackList, setTrackList] = React.useState<any>([]);
-  const [curSearchPage, setCurSearchPage] = React.useState(1);
-
-  const [playing, setPlaying] = React.useState(false);    // Play and Pause
-  const [progress, setProgress] = React.useState(0);      // Progress Slider
-  const [volume, setVolume] = React.useState(1);          // Volume Control
-  const [prevVolume, setPrevVolume] = React.useState(1); 
-  const [curTrack, setCurTrack] = React.useState(0);  	
-  const playerRef = React.useRef<ReactPlayer>(null);
+export const TrackController = () => {
+  const [searchInput, setSearchInput]       = React.useState("");
+  const [searchResult, setSearchResult]     = React.useState<any>([]);
+  const [trackList, setTrackList]           = React.useState<any>([]);
+  const [curSearchPage, setCurSearchPage]   = React.useState(1);
+  const [playing, setPlaying]               = React.useState(false);    
+  const [progress, setProgress]             = React.useState(0);      
+  const [volume, setVolume]                 = React.useState(1);   
+  const [loop, setLoop]                     = React.useState(false);   
+  const [prevVolume, setPrevVolume]         = React.useState(1);      
+  const [curTrack, setCurTrack]             = React.useState(0); 	
+  const playerRef                           = React.useRef<ReactPlayer>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
   const handleSearchSubmit = async () => { //async wraps up the return result
-    setSearchResult(await YTUtils.getDetails(searchInput, ""));
+    setSearchResult(await YT.getDetails(searchInput, ""));
   }
   const handleResultDisplay = (results: any | null) => {
     return results?.items?.map(  // YoutubeUtils return data.items[] ==> "...items..."
       (track: any, index: number) => {
         if (!track || track.snippet.title == "Deleted video") return null;
-        const link = YTUtils.getYTLink(track);
-        if (link == "https://www.youtube.com/watch?v=undefined" || link=="") 
-          return null;
+        const link = YT.getTrackLink(track);
+        if (link == "") return null;
         return (
           <div key={index} className="search-result-list-item">
-            <img src={YTUtils.getIMGLink(track)} />
+            <img src={YT.getIMGLink(track)} />
             <a href={link}> {track.snippet.title} </a>
             {track.snippet.channelTitle}
             <button onClick={() => addTrack(track, trackList.length + 1)}>
@@ -42,8 +42,9 @@ export const MusicService = () => {
             </button>
             {track.id.kind=="youtube#playlist"?
               (<button
-                onClick={async() => displayPlaylist(await YTUtils.getDetails(link, ""))}>
-                show tracks</button>)
+                onClick={async() => handleResultDisplay(await YT.getDetails(link, ""))}>
+                show tracks
+                </button>)
               :
               (null)
             }
@@ -52,30 +53,15 @@ export const MusicService = () => {
       }
     )
   }
-  const displayPlaylist = (results: any | null) => {
-    return results?.items?.map(  
-      (track: any, index: number) => {
-        if (!track || track.snippet.title == "Deleted video") return null;
-        const link = YTUtils.getYTLink(track);
-        console.log(link);
-        if (link == "https://www.youtube.com/watch?v=undefined") return null;
-        return (
-          <div key={index}>
-            <p>aaaa</p>
-          </div>
-        );
-      }
-    )
-  }
   const handleNextSearchPage = async () => {
     if (searchInput == "" || searchResult.nextPageToken == null) return null;
     setCurSearchPage(curSearchPage + 1);
-    setSearchResult(await YTUtils.getDetails(searchInput, searchResult.nextPageToken));
+    setSearchResult(await YT.getDetails(searchInput, searchResult.nextPageToken));
   }
   const handlePrevSearchPage = async () => {
     if (searchInput == "" || searchResult.prevPageToken == null) return null;
     setCurSearchPage(curSearchPage - 1);
-    setSearchResult(await YTUtils.getDetails(searchInput, searchResult.prevPageToken));
+    setSearchResult(await YT.getDetails(searchInput, searchResult.prevPageToken));
   }
   const addTrack = (track: any, index: number) => {
     if (index < 0 || index > trackList.length + 1) return null;
@@ -101,18 +87,15 @@ export const MusicService = () => {
   const handleTrackListDisplay = (tracks: any | null) => {
     return tracks?.map( // trackList is just a normal array
       (track: any, index: number) => {
-        const link = YTUtils.getYTLink(track);
+        const link = YT.getTrackLink(track);
         return (
           <div key={index} className="track-list-item">
-            <img src={YTUtils.getIMGLink(track)} />
+            <img src={YT.getIMGLink(track)} />
             {index == curTrack ? (< icons.HiMusicNote />) : (null)}
             { } {index + 1} {" . "}
             <a href={link}> {track.snippet.title} </a>
             {track.snippet.channelTitle}
             <button onClick={() => removeTrack(index)}> remove </button>
-            <button onClick={() => addTrack(track, index + 1)}>
-              loop
-            </button>
           </div>
         );
       }
@@ -155,12 +138,15 @@ export const MusicService = () => {
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(parseFloat(e.target.value));
   };
-  
+  const handleLoop = () => {
+    setLoop(!loop);
+  }
   // console.log(searchResult);
-  // console.log(trackList);
+  console.log(trackList);
 
   return (
     <div className="global">
+      <button onClick={handleLoop}>loop</button>
       <div className="search-box">
 
         <input
@@ -247,9 +233,11 @@ export const MusicService = () => {
           }
           <ReactPlayer 
             ref={playerRef}
-            url={YTUtils.getYTLink(trackList[curTrack])}
+            url={YT.getTrackLink(trackList[curTrack])}
+            onError={err.BlockedTrack}
             volume={volume}
             playing={playing}
+            loop={loop}
             onProgress={handleProgress}
             onEnded={() => removeTrack(curTrack)}
           />

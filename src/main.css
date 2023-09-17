@@ -1,10 +1,11 @@
 :root {
-    /* Global */
+    /* Base */
     --black: #000000;
     --white: #ffffff;
     --bg-color: #12111b;    
     --w-color: #000000;
     --bg-sub-color: #242036;
+    --bg-comp-color: #342e4f;
 
     /* Button */
     --button-color: #ffffff;

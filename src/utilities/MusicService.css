@@ -3,7 +3,12 @@
   width: 15%;
   overflow: hidden;
 }
-.global nav {
+.global a:link {
+  color: var(--white);
+  text-decoration: none;
+}
+.global a:link:hover {
+  text-decoration: underline;
 }
 
 .search-box {
@@ -22,7 +27,7 @@
   overflow: auto;
 }
 .search-result-list-item {
-  background-color: var(--white);
+  background-color: var(--bg-comp-color);
   margin: 2%;
   max-width: 100%;
 }
@@ -65,7 +70,7 @@
   overflow: auto;
 }
 .track-list-item {
-  background-color: var(--white);
+  background-color: var(--bg-comp-color);
   margin: 2%;
 }
 .thumbnails {

@@ -2,4 +2,4 @@
 export { Home } from "./pages/Home"
 
 // utilities
-export { MusicService } from "./utilities/MusicService"
+export { TrackController } from "./utilities/TrackController"

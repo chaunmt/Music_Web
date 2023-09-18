@@ -9,7 +9,8 @@ Function:
 - Next track, previous track.
 - Volume control, volume button's interaction.
 - Display search's list, track's list.
-![alt text]("./intro/Screenshot 2023-09-17 214603.png")
+
+![alt text](./intro/Screenshot 2023-09-17 214603.png)
 
 Required: 
 - YouTube API's key: https://console.cloud.google.com/apis/.

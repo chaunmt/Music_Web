@@ -24,4 +24,7 @@ dist-ssr
 *.sw?
 
 # Keys
-API_KEY.tsx
+API_KEY.ts
+
+# Self-Document
+PROGRESS.md

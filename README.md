@@ -1,16 +1,12 @@
-Create API_KEY.tsx with your own keys in src folder:
-- export const YOUTUBE_API_KEY = "";
+Required: 
+- YouTube API's key: https://console.cloud.google.com/apis/.
+
+Set up:
+- Change "API_KEY.example.ts" into "API_KEY.ts" and type in your own key.
+- pnpm install
 
 Start:
-- pnpm install
 - pnpm run dev
 
 Implement:
-- Youtube API. Documents: https://developers.google.com/youtube/v3/docs
-
-Current Progress: Display playlist component as separate items (Hide/Unhide)
-                  Make loop a condition check instead of adding it to the queue --> Make unloop a thing
-                  Add loop all
-                  Add Shuffle Button
-                  Add Duration
-                  Delete Video Restricted by location
+- YouTube API. Documents: https://developers.google.com/youtube/v3/docs

@@ -2,10 +2,10 @@
     /* Base */
     --black: #000000;
     --white: #ffffff;
-    --bg-color: #12111b;    
+    --bg-color: #0B0C10;    
     --w-color: #000000;
-    --bg-sub-color: #242036;
-    --bg-comp-color: #342e4f;
+    --bg-sub-color: #25213d;
+    --bg-comp-color: #00000054;
 
     /* Button */
     --button-color: #ffffff;
@@ -17,4 +17,9 @@
     --thumb-color: #34314f59;
     --progress-color: #ffffff;
     --drag-progress-color:#72e5ff;
+
+    /* Nagivation */
+    --scrollbar-track: #1e1a2d;
+    --scrollbar-thumb: #cecece86;
+    --scrollbar-thumb-hover: #868686;
 }

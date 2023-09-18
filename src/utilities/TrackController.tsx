@@ -1,6 +1,6 @@
 import React        from "react";
 import ReactPlayer  from "react-player";
-import "./MusicService.css";
+import "./TrackController.css";
 
 import YT from "./YoutubeUtils";
 import err from "../errors";
@@ -11,6 +11,7 @@ export const TrackController = () => {
   const [searchInput, setSearchInput]       = React.useState("");
   const [searchResult, setSearchResult]     = React.useState<any>([]);
   const [trackList, setTrackList]           = React.useState<any>([]);
+  const [oldTrackList, setOldTrackList]     = React.useState<any>([]);
   const [curSearchPage, setCurSearchPage]   = React.useState(1);
   const [playing, setPlaying]               = React.useState(false);    
   const [progress, setProgress]             = React.useState(0);      
@@ -34,17 +35,21 @@ export const TrackController = () => {
         if (link == "") return null;
         return (
           <div key={index} className="search-result-list-item">
-            <img src={YT.getIMGLink(track)} />
-            <a href={link}> {track.snippet.title} </a>
-            {track.snippet.channelTitle}
-            <button onClick={() => addTrack(track, trackList.length + 1)}>
-              add
+            <div className="search-result-list-item-info">
+              <img src={YT.getIMGLink(track)} />
+              <a href={link}> {track.snippet.title} - {track.snippet.channelTitle} </a>
+            </div>
+            <button
+              className="search-result-list-item-add"
+              onClick={() => addTrack(track, trackList.length + 1)}>
+              < icons.MdOutlineAdd />
             </button>
             {track.id.kind=="youtube#playlist"?
               (<button
+                className="search-result-list-item-show-tracks"
                 onClick={async() => handleResultDisplay(await YT.getDetails(link, ""))}>
-                show tracks
-                </button>)
+                < icons.AiFillCaretDown />
+              </button>)
               :
               (null)
             }
@@ -90,12 +95,17 @@ export const TrackController = () => {
         const link = YT.getTrackLink(track);
         return (
           <div key={index} className="track-list-item">
-            <img src={YT.getIMGLink(track)} />
-            {index == curTrack ? (< icons.HiMusicNote />) : (null)}
-            { } {index + 1} {" . "}
-            <a href={link}> {track.snippet.title} </a>
-            {track.snippet.channelTitle}
-            <button onClick={() => removeTrack(index)}> remove </button>
+            <div className="track-list-item-info">
+              <img src={YT.getIMGLink(track)} />
+              {index == curTrack ? (< icons.HiMusicNote />) : (null)}
+              { } {index + 1} {" . "}
+              <a href={link}> {track.snippet.title} - {track.snippet.channelTitle} </a> 
+            </div> 
+            <button 
+              className="track-list-item-remove"
+              onClick={() => removeTrack(index)}>
+                < icons.MdOutlineRemove />
+            </button>
           </div>
         );
       }
@@ -106,6 +116,7 @@ export const TrackController = () => {
     setPlaying(false);
     setProgress(0);
     setTrackList([]);
+    setOldTrackList([]);
   };
   const handlePlayPause = () => {
     setPlaying((prevState) => !prevState);
@@ -126,6 +137,7 @@ export const TrackController = () => {
     if (playerRef.current) // update React Player's progress to match with progress slider
       playerRef.current.seekTo(parseFloat(e.target.value));
   };
+  
   const handleVolumeMute = () => {
     if (volume == 0) {
       setVolume(prevVolume);
@@ -141,36 +153,48 @@ export const TrackController = () => {
   const handleLoop = () => {
     setLoop(!loop);
   }
+
+  const getDuration = () => {
+    const duration = playerRef.current?.getDuration;
+    return duration;
+  }
+
   // console.log(searchResult);
-  console.log(trackList);
+  // console.log(oldTrackList);
 
   return (
     <div className="global">
-      <button onClick={handleLoop}>loop</button>
       <div className="search-box">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="search here"
+            onChange={handleChange}
+            value={searchInput}>
+          </input>
 
-        <input
-          className="search-bar"
-          type="text"
-          placeholder="search here"
-          onChange={handleChange}
-          value={searchInput}>
-        </input>
-
-        <button
-          className="search-submit"
-          onClick={handleSearchSubmit}>
-          < icons.HiSearch />
-        </button>
+          <button
+            onClick={handleSearchSubmit}>
+            < icons.HiSearch />
+          </button>
+        </div>
 
         <div className="search-result-list">
           {handleResultDisplay(searchResult)}
         </div>
 
-        <div className="search-page-navigator">
-          <button onClick={handlePrevSearchPage}>prev</button>
-          { curSearchPage }          
-          <button onClick={handleNextSearchPage}>next</button>
+        <div className="page-navigator">
+          <button 
+            className="prev"
+            onClick={handlePrevSearchPage}>
+            < icons.FaArrowLeft />
+            </button>
+          {curSearchPage}          
+          <button
+            className="next"
+            onClick={handleNextSearchPage}>
+            < icons.FaArrowRight />
+          </button>
         </div>
 
       </div>
@@ -184,21 +208,22 @@ export const TrackController = () => {
       </div>
 
       <div className="bottom-container">
-        <button className="stop-button" onClick={handleCancel}>
-          <p>terminate</p>
-        </button>
+        <div className="left-box">
+          cur song
+        </div>
 
-        <button className="play-pause-button" onClick={handlePlayPause}>
-          {playing ? < icons.HiPause /> : < icons.HiPlay />}
-        </button>
-
-        <button className="forward-button" onClick={handleForward}>
-          < icons.ImForward3 />
-        </button>
-        <button className="backward-button" onClick={handleBackward}>
-          < icons.ImBackward2 />
-        </button>
-
+        <div className="middle-box">
+          <button className="backward-button" onClick={handleBackward}>
+            < icons.ImBackward2 />
+          </button>
+          <button className="play-pause-button" onClick={handlePlayPause}>
+            {playing ? < icons.HiPause /> : < icons.HiPlay />}
+          </button>
+          <button className="forward-button" onClick={handleForward}>
+            < icons.ImForward3 />
+          </button>
+        </div>
+        
         <input
           className="progress-slider"
           type="range" min={0} max={1} step="any"
@@ -207,7 +232,7 @@ export const TrackController = () => {
           style={{ "--progress": progress } as React.CSSProperties}
         />
 
-        <div className="volume-container">
+        <div className="right-box">
           <button className="volume-button" onClick={() => handleVolumeMute()}>
             {volume > 0.66 ? (< icons.ImVolumeHigh />)
               : volume > 0.33 ? (< icons.ImVolumeMedium />)
@@ -225,25 +250,23 @@ export const TrackController = () => {
           />
 
         </div>
-
-        <div className="hidden-box">
-          {setTimeout(() => { // Delay the function in other for ReactPlayer to keep up with Youtube API
-            console.log('Song is comming in 1 second');
-            }, 1000)
-          }
-          <ReactPlayer 
-            ref={playerRef}
-            url={YT.getTrackLink(trackList[curTrack])}
-            onError={err.BlockedTrack}
-            volume={volume}
-            playing={playing}
-            loop={loop}
-            onProgress={handleProgress}
-            onEnded={() => removeTrack(curTrack)}
-          />
-        </div>
       </div>
-
+      <div className="video-box">
+        {setTimeout(() => { // Delay the function in other for ReactPlayer to keep up with Youtube API
+          console.log('Song is comming in 1 second');
+          }, 1000)
+        }
+        <ReactPlayer 
+          ref={playerRef}
+          url={YT.getTrackLink(trackList[curTrack])}
+          onError={err.BlockedTrack}
+          volume={volume}
+          playing={playing}
+          loop={loop}
+          onProgress={handleProgress}
+          onEnded={() => removeTrack(curTrack)}
+        />
+      </div>
     </div>
   );
 }

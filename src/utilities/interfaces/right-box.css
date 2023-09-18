@@ -1,0 +1,58 @@
+.right-box {
+  position: relative;
+  text-align: center;
+  margin-right: 3%;
+  width: 22%;
+}
+.volume-button {
+  position: relative;
+  top: 50%;
+  right: 1%;
+  transform: translateY(-50%);
+  font-size: 125%;
+  color: var(--button-color-dim);
+}
+.volume-slider[type="range"] {
+  -webkit-appearance: none;
+    appearance: none;
+    position: fixed;
+    width: 8%;
+    height: 0.6%;
+    bottom: 7.2%;
+    outline: none;
+    border-radius: 2px;
+
+  /* Adjust progress bar's color by gradients */
+  background: linear-gradient(
+    to right,
+      var(--progress-color) 0%,
+      var(--progress-color) calc(var(--volume) * 100%),
+      var(--slider-color) calc(var(--volume) * 100%),
+      var(--slider-color) 100%
+  );
+}
+.volume-slider[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 4%;
+  height: 4%;
+  background: var(--progress-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.volume-slider[type="range"]:hover::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+}
+.volume-slider[type="range"]:active::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+}
+.volume-slider[type="range"]:hover {
+  background: linear-gradient(
+  to right,
+    var(--drag-progress-color) 0%,
+    var(--drag-progress-color) calc(var(--volume) * 100%),
+    var(--slider-color) calc(var(--volume) * 100%),
+    var(--slider-color) 100%
+  );
+}

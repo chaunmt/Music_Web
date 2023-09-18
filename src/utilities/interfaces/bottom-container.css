@@ -1,0 +1,19 @@
+@import url("./left-box.css");
+@import url("./middle-box.css");
+@import url("./right-box.css");
+@import url("./progress-slider.css");
+
+.bottom-container {
+  position: absolute;
+  text-align: center;
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  left: 0%;
+  margin: auto;
+  height: 15%;
+  background-color: var(--button-container-color);
+}
+.bottom-container button:active{
+  color: var(--button-color);
+}

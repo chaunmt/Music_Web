@@ -1,0 +1,23 @@
+@import url("../main.css");
+@import url("../utilities/interfaces/bottom-container.css");
+@import url("../utilities/interfaces/search-box.css");
+@import url("../utilities/interfaces/track-box.css");
+@import url("../utilities/interfaces/back-stage.css");
+@import url("../utilities/interfaces/navigator.css");
+
+.global img {
+  width: 15%;
+  overflow: hidden;
+}
+.global a:link, a:visited, a:hover, a:active {
+  color: var(--white);
+  text-decoration: none;
+}
+.global button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  color: var(--button-color);
+}

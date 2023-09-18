@@ -1,0 +1,29 @@
+@import url("/src/main.css");
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb); 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover); 
+}
+
+.page-navigator {
+  position: relative;
+  text-align: center;
+  height: 7%;
+  width: 100%;
+  max-width: 100%;
+  color: var(--button-color-dim);
+}
+.prev {
+  margin-right: 1%;
+}
+.next {
+  margin-left: 1%;
+}

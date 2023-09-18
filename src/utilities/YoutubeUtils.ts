@@ -50,7 +50,7 @@ async function getSearchDetails(value: string, pageToken: string) {
       part: "snippet, id",
       q: value,
       type: "any",
-      maxResults: 5,
+      maxResults: 10,
       pageToken: pageToken,
       key: YOUTUBE_API_KEY,
     },

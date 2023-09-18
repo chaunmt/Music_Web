@@ -111,7 +111,25 @@ export const TrackController = () => {
       }
     )
   }
-
+  const handleCurrentTrackDisplay = () => {
+    if (!trackList || trackList.length <= 0) return null;
+    const track = trackList[curTrack];
+    const link = YT.getTrackLink(track);
+    console.log(track);
+    return (
+      <div>
+        {/* <div className="left-box-img">
+          <img src={YT.getIMGLink(track)} />
+        </div> */}
+        <div className="left-box-info">
+          <a 
+            href={link}>
+            {track.snippet.title} - {track.snippet.channelTitle}
+          </a>
+        </div>
+      </div>
+    )
+  }
   const handleCancel = () => {
     setPlaying(false);
     setProgress(0);
@@ -209,7 +227,7 @@ export const TrackController = () => {
 
       <div className="bottom-container">
         <div className="left-box">
-          cur song
+          { handleCurrentTrackDisplay() }
         </div>
 
         <div className="middle-box">

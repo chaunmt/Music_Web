@@ -16,7 +16,7 @@ Required:
 - YouTube API's key: https://console.cloud.google.com/apis/.
 
 Set up:
-- Change "API_KEY.example.ts" into "API_KEY.ts" and type in your own key.
+- Change ".env.example" into ".env" and type in your own key.
 - pnpm install
 
 Start:

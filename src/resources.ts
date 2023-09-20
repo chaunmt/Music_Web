@@ -1,5 +1,7 @@
-// utilities
-export { YOUTUBE_API_KEY } from "./API_KEY"
+// api_key
+import dotenv from "dotenv";
+dotenv.config();
+export const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 // images
 export const defaultImg = "https://i.ytimg.com/vi/default.jpg";

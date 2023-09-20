@@ -24,7 +24,10 @@ dist-ssr
 *.sw?
 
 # Keys
-API_KEY.ts
+.env                
+.env.local          
+.env.[mode]         
+.env.[mode].local   
 
-# Self-Document
+# Self-
 PROGRESS.md
